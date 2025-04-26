@@ -93,6 +93,15 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
+-- Import color theme based on environment variable NVIM_THEME
+local default_color_scheme = 'nord'
+local env_var_nvim_theme = os.getenv 'NVIM_THEME' or default_color_scheme
+
+local themes = {
+  nord = 'plugins.themes.nord',
+  onedark = 'plugins.themes.onedark',
+}
+
 -- [[ Setting options ]]
 require 'options'
 

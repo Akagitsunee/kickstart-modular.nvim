@@ -9,6 +9,17 @@
 --    :Lazy update
 --
 -- NOTE: Here is where you install your plugins.
+
+-- Import color theme based on environment variable NVIM_THEME
+local default_color_scheme = 'nord'
+local env_var_nvim_theme = os.getenv 'NVIM_THEME' or default_color_scheme
+
+-- Define a table of theme modules
+local themes = {
+  nord = 'kickstart.plugins.themes.nord',
+  onedark = 'kickstart.plugins.themes.onedark',
+}
+
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -23,6 +34,7 @@ require('lazy').setup({
   -- modular approach: using `require 'path/name'` will
   -- include a plugin definition from file lua/path/name.lua
 
+  require(themes[env_var_nvim_theme]),
   require 'kickstart/plugins/gitsigns',
 
   require 'kickstart/plugins/which-key',
@@ -42,6 +54,10 @@ require('lazy').setup({
   require 'kickstart/plugins/mini',
 
   require 'kickstart/plugins/treesitter',
+
+  require 'kickstart/plugins/copilot-chat',
+
+  require 'kickstart/plugins/vim-be-good',
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and

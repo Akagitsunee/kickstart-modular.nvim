@@ -36,6 +36,10 @@ return {
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { 'eslint_d' }, -- Use eslint_d first, then prettier
+        javascriptreact = { 'eslint_d'},
+        typescript = { 'eslint_d'},
+        typescriptreact = { 'eslint_d'},
       },
     },
   },

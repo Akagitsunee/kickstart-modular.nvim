@@ -51,4 +51,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Disable arrow keys in Normal mode
+vim.keymap.set('n', '<Up>', '<Nop>', { desc = 'No operation (force hjkl)' })
+vim.keymap.set('n', '<Down>', '<Nop>', { desc = 'No operation (force hjkl)' })
+vim.keymap.set('n', '<Left>', '<Nop>', { desc = 'No operation (force hjkl)' })
+vim.keymap.set('n', '<Right>', '<Nop>', { desc = 'No operation (force hjkl)' })
 -- vim: ts=2 sts=2 sw=2 et
