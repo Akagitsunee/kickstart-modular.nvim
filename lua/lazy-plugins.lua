@@ -10,17 +10,6 @@
 --
 -- NOTE: Here is where you install your plugins.
 
--- Import color theme based on environment variable NVIM_THEME
-local default_color_scheme = 'nord'
-local env_var_nvim_theme = os.getenv 'NVIM_THEME' or default_color_scheme
-
--- Define a table of theme modules
-local themes = {
-  nord = 'kickstart.plugins.themes.nord',
-  onedark = 'kickstart.plugins.themes.onedark',
-  tokyonight = 'kickstart.plugins.themes.tokyonight',
-}
-
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -32,10 +21,10 @@ require('lazy').setup({
   -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
   --
 
+  -- Add the theme plugins
+  require('kickstart.plugins.theme-switcher').get_plugin_specs(),
   -- modular approach: using `require 'path/name'` will
   -- include a plugin definition from file lua/path/name.lua
-
-  require(themes[env_var_nvim_theme]),
   require 'kickstart/plugins/gitsigns',
 
   require 'kickstart/plugins/which-key',
@@ -78,11 +67,6 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   { import = 'custom.plugins' },
-  --
-  -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
-  -- Or use telescope!
-  -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
-  -- you can continue same window with `<space>sr` which resumes last telescope search
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -102,6 +86,13 @@ require('lazy').setup({
       task = '📌',
       lazy = '💤 ',
     },
+  },
+  change_detection = {
+    enabled = true,
+    notify = true,
+  },
+  install = {
+    missing = true,
   },
 })
 

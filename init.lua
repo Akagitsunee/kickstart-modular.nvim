@@ -111,6 +111,8 @@ require 'keymaps'
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 require 'lazy-bootstrap'
+-- [[ Setup theme switcher ]]
+require('kickstart.plugins.theme-switcher').setup()
 
 -- [[ Configure and install plugins ]]
 require 'lazy-plugins'
