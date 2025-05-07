@@ -1,6 +1,6 @@
 local M = {}
 
-local state = { themes = {}, current_idx = 1 }
+local state = { themes = {}, current_idx = 3 }
 
 -- Apply transparency to common highlight groups
 local function set_transparent(enable)
