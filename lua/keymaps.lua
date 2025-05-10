@@ -51,9 +51,53 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.api.nvim_create_autocmd('VimResized', {
+  pattern = '*',
+  command = 'wincmd =',
+})
+
+vim.api.nvim_create_autocmd('BufReadPost', {
+  callback = function()
+    local mark = vim.api.nvim_buf_get_mark(0, '"')
+    local line_count = vim.api.nvim_buf_line_count(0)
+    if mark[1] > 0 and mark[1] <= line_count then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
+
 -- Disable arrow keys in Normal mode
 vim.keymap.set('n', '<Up>', '<Nop>', { desc = 'No operation (force hjkl)' })
 vim.keymap.set('n', '<Down>', '<Nop>', { desc = 'No operation (force hjkl)' })
 vim.keymap.set('n', '<Left>', '<Nop>', { desc = 'No operation (force hjkl)' })
 vim.keymap.set('n', '<Right>', '<Nop>', { desc = 'No operation (force hjkl)' })
+
+-- Custom keymaps
+--
+--Baisc Actions
+vim.keymap.set('n', '<leader>w', ':w <CR>', { desc = 'Write' })
+
+-- Make escaping insert mode possible with CTRL-C
+vim.keymap.set('i', '<C-c>', '<Esc>')
+-- Don't copy deleted text with 'x' or 'd' in normal and visual mode
+
+vim.keymap.set('n', '<leader>sa', 'ggVG', { desc = 'Select all' })
+vim.keymap.set('n', '<leader>pa', 'ggVGp', { desc = 'Select all and paste' })
+
+vim.keymap.set({ 'n', 'v' }, 'x', [["_x]])
+vim.keymap.set({ 'n', 'v' }, 'd', [["_d]])
+vim.keymap.set('n', '<leader>P', 'o<Esc>O<Esc>p')
+
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected lines down' })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selected lines up' })
+-- Oil
+vim.keymap.set('n', '<leader>oi', ':Oil <CR>', { desc = 'Open Oil' })
+vim.keymap.set('n', '<leader>z', ':ZenMode <CR>', { desc = 'Toggle Zen' })
+-- Misc
+vim.keymap.set('n', 't', ':TransparentToggle <CR>', { desc = 'Toggle Transparancy' })
+vim.keymap.set('n', '<leader>tt', ':SwitchColorscheme <CR>', { desc = 'Change Colorscheme' })
+
+vim.keymap.set('n', '<leader>to', function()
+  vim.opt.scrolloff = 999 - vim.o.scrolloff
+end, { desc = 'Toggle center cursor' })
 -- vim: ts=2 sts=2 sw=2 et

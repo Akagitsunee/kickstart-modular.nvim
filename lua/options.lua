@@ -30,6 +30,7 @@ vim.opt.breakindent = true
 
 -- Save undo history
 vim.opt.undofile = true
+vim.opt.swapfile = false
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -68,4 +69,42 @@ vim.opt.scrolloff = 10
 -- See `:help 'confirm'`
 vim.opt.confirm = true
 
+-- Misc
+vim.opt.shiftwidth = 4
+vim.opt.linespace = 8
+vim.opt.signcolumn = 'yes:1'
+vim.api.nvim_set_hl(0, 'LineNr', { fg = '#ffffff' }) -- Make absolute line numbers white
+vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#ffffff', bold = true }) -- Make current line number white and bold
+
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = 'yes'
+vim.opt.termguicolors = true
+
+-- Keep some space around cursor to reduce visual overwhelm
+vim.opt.scrolloff = 10
+vim.opt.sidescrolloff = 10
+
+-- Enable code folding with syntax awareness
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevel = 2
+vim.opt.foldenable = true
+
+-- Autocmds
+
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold' }, {
+  command = 'checktime',
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = '*',
+  command = 'set formatoptions-=cro',
+})
+
+vim.api.nvim_create_autocmd('BufWritePost', {
+  pattern = vim.fn.expand '$MYVIMRC',
+  command = 'source $MYVIMRC',
+  desc = 'Reload Neovim config on save',
+})
 -- vim: ts=2 sts=2 sw=2 et

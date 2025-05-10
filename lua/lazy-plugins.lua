@@ -10,6 +10,11 @@
 --
 -- NOTE: Here is where you install your plugins.
 
+local setlinecolor = function()
+  vim.api.nvim_set_hl(0, 'LineNr', { fg = '#ffffff' })
+  vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#ffffff', bold = true })
+end
+
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -21,8 +26,8 @@ require('lazy').setup({
   -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
   --
 
-  -- Add the theme plugins
-  require('kickstart.plugins.theme-switcher').get_plugin_specs(),
+  -- Load all themes
+  require('kickstart.plugins.theme-loader').get_plugin_specs(),
   -- modular approach: using `require 'path/name'` will
   -- include a plugin definition from file lua/path/name.lua
   require 'kickstart/plugins/gitsigns',
@@ -49,6 +54,10 @@ require('lazy').setup({
   require 'kickstart/plugins/lualine',
   require 'kickstart/plugins/oil',
   require 'kickstart/plugins/zen-mode',
+  require 'kickstart.plugins.switchscheme',
+  require 'kickstart.plugins.transparent',
+  require 'kickstart.plugins.notify',
+  require 'kickstart.plugins.noice',
   -- require 'kickstart/plugins/bufferline',
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -62,7 +71,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`

@@ -1,10 +1,10 @@
 return {
   'navarasu/onedark.nvim',
-  lazy = true,
+  lazy = false,
   priority = 1000,
   config = function()
     require('onedark').setup {
-      style = 'dark',
+      style = 'darker',
       code_style = {
         comments = 'none',
         keywords = 'none',
@@ -19,5 +19,6 @@ return {
       },
     }
     require('onedark').load()
+    vim.cmd.colorscheme 'onedark'
   end,
 }
