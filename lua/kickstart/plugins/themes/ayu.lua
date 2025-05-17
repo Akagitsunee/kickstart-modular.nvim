@@ -17,6 +17,5 @@ return {
       --   VertSplit = { bg = 'None' },
       -- },
     }
-    vim.cmd 'colorscheme ayu'
   end,
 }

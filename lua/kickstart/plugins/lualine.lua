@@ -64,13 +64,13 @@ return {
             fmt = string.upper,
             cond = section_b_cond[1],
           },
-          {
-            function()
-              return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-            end,
-            icon = { icons.directory, color = 'Directory' },
-            cond = section_b_cond[2],
-          },
+          -- {
+          --   function()
+          --     return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+          --   end,
+          --   icon = { icons.directory, color = 'Directory' },
+          --   cond = section_b_cond[2],
+          -- },
           { 'filename' },
         },
         lualine_z = {

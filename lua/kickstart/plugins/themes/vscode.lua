@@ -17,7 +17,6 @@ return {
       }
 
       -- Set colorscheme
-      vim.cmd.colorscheme 'vscode'
     end,
   },
 }

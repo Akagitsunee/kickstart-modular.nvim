@@ -8,7 +8,6 @@ vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
-vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -85,11 +84,11 @@ vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 10
 
 -- Enable code folding with syntax awareness
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldlevel = 2
-vim.opt.foldenable = true
-
+-- vim.opt.foldmethod = 'expr'
+-- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.opt.foldlevel = 2
+-- vim.opt.foldenable = true
+--
 -- Autocmds
 
 vim.opt.autoread = true

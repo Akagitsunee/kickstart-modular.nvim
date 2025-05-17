@@ -75,7 +75,9 @@ vim.keymap.set('n', '<Right>', '<Nop>', { desc = 'No operation (force hjkl)' })
 -- Custom keymaps
 --
 --Baisc Actions
-vim.keymap.set('n', '<leader>w', ':w <CR>', { desc = 'Write' })
+vim.keymap.set('n', '<leader>w', ':w <CR>', { desc = '[W]rite' })
+vim.keymap.set('n', '<leader>q', ':q <CR>', { desc = '[Q]uit' })
+vim.keymap.set('n', '<leader>wq', ':wq <CR>', { desc = '[Q]uit and [W]rite' })
 
 -- Make escaping insert mode possible with CTRL-C
 vim.keymap.set('i', '<C-c>', '<Esc>')
@@ -83,6 +85,7 @@ vim.keymap.set('i', '<C-c>', '<Esc>')
 
 vim.keymap.set('n', '<leader>sa', 'ggVG', { desc = 'Select all' })
 vim.keymap.set('n', '<leader>pa', 'ggVGp', { desc = 'Select all and paste' })
+vim.keymap.set('n', '<leader>du', '0Yo<Esc>P', { desc = 'Select line ad paste below' })
 
 vim.keymap.set({ 'n', 'v' }, 'x', [["_x]])
 vim.keymap.set({ 'n', 'v' }, 'd', [["_d]])
@@ -100,4 +103,15 @@ vim.keymap.set('n', '<leader>tt', ':SwitchColorscheme <CR>', { desc = 'Change Co
 vim.keymap.set('n', '<leader>to', function()
   vim.opt.scrolloff = 999 - vim.o.scrolloff
 end, { desc = 'Toggle center cursor' })
+
+vim.keymap.set('n', '<leader>r', function()
+  vim.wo.relativenumber = not vim.wo.relativenumber
+end, { desc = 'Toggle relative number' })
+
+-- Hide visual errors like eslint
+vim.keymap.set('n', '<leader>te', function()
+  local vt = vim.diagnostic.config().virtual_text
+  vim.diagnostic.config { virtual_text = not vt, underline = not vt }
+end, { desc = 'Toggle ESLint visuals' })
+
 -- vim: ts=2 sts=2 sw=2 et
