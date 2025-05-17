@@ -114,4 +114,7 @@ vim.keymap.set('n', '<leader>te', function()
   vim.diagnostic.config { virtual_text = not vt, underline = not vt }
 end, { desc = 'Toggle ESLint visuals' })
 
+-- LSPSaga
+vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>', { silent = true })
+
 -- vim: ts=2 sts=2 sw=2 et

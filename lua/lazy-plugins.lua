@@ -58,6 +58,7 @@ require('lazy').setup({
   require 'kickstart.plugins.transparent',
   require 'kickstart.plugins.notify',
   require 'kickstart.plugins.noice',
+  require 'kickstart.plugins.lspsaga',
   -- require 'kickstart/plugins/bufferline',
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
