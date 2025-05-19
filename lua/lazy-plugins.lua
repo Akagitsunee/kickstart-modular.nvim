@@ -15,6 +15,8 @@ local setlinecolor = function()
   vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#ffffff', bold = true })
 end
 
+require 'kickstart.plugins.diagnostic-config'
+
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -59,6 +61,7 @@ require('lazy').setup({
   require 'kickstart.plugins.notify',
   require 'kickstart.plugins.noice',
   require 'kickstart.plugins.lspsaga',
+  require 'kickstart.plugins.trouble',
   -- require 'kickstart/plugins/bufferline',
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and

@@ -106,18 +106,6 @@ require 'lazy-plugins'
 
 vim.cmd.colorscheme 'catppuccin'
 
-vim.diagnostic.config {
-  virtual_text = false, -- disables inline text
-  signs = true, -- keeps gutter signs
-  float = {
-    border = 'rounded', -- nice look
-    source = 'always', -- show where it comes from
-    header = '',
-    prefix = '',
-  },
-  update_in_insert = false, -- don't show in insert mode
-}
-
 -- Show diagnostics in a floating window on CursorHold
 vim.o.updatetime = 800 -- shorter delay before CursorHold triggers
 vim.cmd [[

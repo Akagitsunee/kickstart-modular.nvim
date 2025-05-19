@@ -106,4 +106,19 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   command = 'source $MYVIMRC',
   desc = 'Reload Neovim config on save',
 })
+
+-- Basic vim options
+vim.opt.cursorline = true -- Highlight the current line
+vim.opt.showmatch = true -- Show matching brackets
+vim.opt.relativenumber = true -- Relative line numbers help with movement
+
+-- Add visual aids for indentation
+vim.opt.list = true
+vim.opt.listchars = {
+  tab = '» ',
+  extends = '›',
+  precedes = '‹',
+  nbsp = '·',
+  trail = '·',
+}
 -- vim: ts=2 sts=2 sw=2 et

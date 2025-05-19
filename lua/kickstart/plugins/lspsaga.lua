@@ -1,4 +1,3 @@
--- ~/.config/nvim/lua/plugins/lsp.lua
 return {
   {
     'nvimdev/lspsaga.nvim',
@@ -6,22 +5,38 @@ return {
     config = function()
       require('lspsaga').setup {
         diagnostic = {
-          show_code_action = false,
-          max_width = 80,
+          show_code_action = true,
+          show_source = true,
+          jump_num_shortcut = true,
+          max_width = 60,
           max_height = 10,
-          show_layout = 'float', -- or "normal" if float is too annoying
-          border_follow = false,
-          border_style = 'rounded',
-          extend_relatedInformation = false, -- turn off extra type noise
+          text_hl_follow = true,
+          border_follow = true,
+          extend_relatedInformation = true,
+          show_layout = 'float',
+          keys = {
+            exec_action = 'o',
+            quit = 'q',
+            toggle_or_jump = '<CR>',
+          },
         },
         ui = {
           border = 'rounded',
+          colors = {
+            normal_bg = '#1a1b26',
+          },
+          kind = require('catppuccin.groups.integrations.lsp_saga').custom_kind(),
+        },
+        lightbulb = {
+          enable = true,
+          sign = true,
+          virtual_text = false,
         },
       }
     end,
     dependencies = {
-      'nvim-tree/nvim-web-devicons', -- icons
-      'nvim-treesitter/nvim-treesitter', -- for code parsing (not strictly required but recommended)
+      'nvim-tree/nvim-web-devicons',
+      'nvim-treesitter/nvim-treesitter',
     },
   },
 }
