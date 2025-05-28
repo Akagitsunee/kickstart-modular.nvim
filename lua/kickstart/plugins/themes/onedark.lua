@@ -1,17 +1,10 @@
 return {
   'navarasu/onedark.nvim',
-  lazy = false,
+  lazy = true,
   priority = 1000,
   config = function()
     require('onedark').setup {
-      style = 'darker',
-      code_style = {
-        comments = 'none',
-        keywords = 'none',
-        functions = 'none',
-        strings = 'none',
-        variables = 'none',
-      },
+      style = 'warm',
       diagnostics = {
         darker = true,
         undercurl = true,

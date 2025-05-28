@@ -2,47 +2,100 @@
 --  See `:help vim.keymap.set()`
 
 -- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
+-- Window Navigation
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
--- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
--- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
--- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
--- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+-- Terminal Escape
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Exit insert mode' })
 
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
+-- Disable arrow keys (force hjkl)
+vim.keymap.set('n', '<Up>', '<Nop>', { desc = 'No operation (force hjkl)' })
+vim.keymap.set('n', '<Down>', '<Nop>', { desc = 'No operation (force hjkl)' })
+vim.keymap.set('n', '<Left>', '<Nop>', { desc = 'No operation (force hjkl)' })
+vim.keymap.set('n', '<Right>', '<Nop>', { desc = 'No operation (force hjkl)' })
 
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
+-- File operations [f]
+vim.keymap.set('n', '<leader>fn', '<cmd>enew<cr>', { desc = 'New File' })
+
+-- Search operations [s]
+vim.keymap.set('n', '<leader>sa', 'ggVG', { desc = 'Select all' })
+
+-- Window operations [w]
+vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Write' })
+vim.keymap.set('n', '<leader>wq', ':wq<CR>', { desc = 'Write and Quit' })
+vim.keymap.set('n', '<leader>wv', '<C-w>v', { desc = 'Split window vertically' })
+vim.keymap.set('n', '<leader>wh', '<C-w>s', { desc = 'Split window horizontally' })
+
+-- UI toggles [u]
+vim.keymap.set('n', '<leader>ut', ':TransparentToggle<CR>', { desc = 'Toggle Transparency' })
+vim.keymap.set({ "n"}, 't', ':TransparentToggle<CR>', { desc = 'Toggle Transparency' })
+vim.keymap.set('n', '<leader>uz', ':ZenMode<CR>', { desc = 'Toggle Zen Mode' })
+vim.keymap.set('n', '<leader>ul', ':Lazy<CR>', { desc = 'Lazy' })
+vim.keymap.set('n', '<leader>um', ':Mason<CR>', { desc = 'Mason' })
+vim.keymap.set('n', '<leader>uc', ':SwitchColorscheme<CR>', { desc = 'Change Colorscheme' })
+vim.keymap.set('n', '<leader>ur', function()
+  vim.wo.relativenumber = not vim.wo.relativenumber
+end, { desc = 'Toggle relative number' })
+vim.keymap.set('n', '<leader>uo', function()
+  vim.opt.scrolloff = 999 - vim.o.scrolloff
+end, { desc = 'Toggle center cursor' })
+vim.keymap.set('n', '<leader>uh', function()
+  local buf = vim.api.nvim_get_current_buf()
+  local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = buf })
+  vim.lsp.inlay_hint.enable(not enabled, { bufnr = buf })
+end, { desc = 'Toggle Inlay Hints' })
+vim.keymap.set('n', '<leader>ue', function()
+  local diagnostics_enabled = vim.diagnostic.is_disabled()
+  if diagnostics_enabled then
+    -- Enable only ESLint diagnostics
+    vim.diagnostic.enable()
+    vim.diagnostic.config({
+      virtual_text = true,
+      signs = true,
+      underline = true,
+      update_in_insert = false,
+      severity_sort = true,
+    })
+  else
+    -- Disable all diagnostics
+    vim.diagnostic.disable()
+  end
+end, { desc = 'Toggle ESLint Diagnostics' })
+
+-- Code/LSP actions [c]
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code Action' })
+vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename' })
+vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format, { desc = 'Format' })
+vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, { desc = "CodeLens Action" })
+vim.keymap.set("n", "<leader>cD", vim.lsp.buf.type_definition, { desc = "Type Definition" })
+vim.keymap.set('n', '<leader>ct', function()
+  local vt = vim.diagnostic.config().virtual_text
+  vim.diagnostic.config { virtual_text = not vt, underline = not vt }
+end, { desc = 'Toggle diagnostics' })
+
+-- Explorer [e]
+vim.keymap.set('n', '<leader>e', ':Oil<CR>', { desc = 'Open Oil' })
+
+-- Quick actions
+vim.keymap.set('n', '<leader>q', ':q<CR>', { desc = 'Quit' })
+vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>', { silent = true, desc = 'Hover Documentation' })
+vim.keymap.set('n', '<leader>P', 'o<Esc>O<Esc>p', { desc = 'Paste with padding' })
+
+-- Text manipulation
+vim.keymap.set('n', '<leader>pa', 'ggVGp', { desc = 'Select all and paste' })
+vim.keymap.set('n', '<leader>du', '0Yo<Esc>P', { desc = 'Duplicate line' })
+vim.keymap.set({ 'n', 'v' }, 'x', [["_x]], { desc = 'Delete without yanking' })
+vim.keymap.set({ 'n', 'v' }, 'd', [["_d]], { desc = 'Delete without yanking' })
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected lines down' })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selected lines up' })
+
+-- [[ Autocommands ]]
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -66,55 +119,31 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 
--- Disable arrow keys in Normal mode
-vim.keymap.set('n', '<Up>', '<Nop>', { desc = 'No operation (force hjkl)' })
-vim.keymap.set('n', '<Down>', '<Nop>', { desc = 'No operation (force hjkl)' })
-vim.keymap.set('n', '<Left>', '<Nop>', { desc = 'No operation (force hjkl)' })
-vim.keymap.set('n', '<Right>', '<Nop>', { desc = 'No operation (force hjkl)' })
+-- File operations [f]
+local function setup_telescope_keymaps()
+  local builtin = require("telescope.builtin")
+  -- File operations
+  vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
+  vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Recent Files' })
+  vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Buffers' })
+  
+  -- Search operations
+  vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'Grep' })
+  vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = 'Word' })
+  vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'Help Pages' })
+  vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = 'Search Keymaps' })
+end
 
--- Custom keymaps
---
---Baisc Actions
-vim.keymap.set('n', '<leader>w', ':w <CR>', { desc = '[W]rite' })
-vim.keymap.set('n', '<leader>q', ':q <CR>', { desc = '[Q]uit' })
-vim.keymap.set('n', '<leader>wq', ':wq <CR>', { desc = '[Q]uit and [W]rite' })
+-- Setup telescope keymaps after plugin loads
+vim.api.nvim_create_autocmd("User", {
+  pattern = "LazyLoad",
+  callback = function(event)
+    if event.data == "telescope.nvim" then
+      setup_telescope_keymaps()
+    end
+  end,
+})
 
--- Make escaping insert mode possible with CTRL-C
-vim.keymap.set('i', '<C-c>', '<Esc>')
--- Don't copy deleted text with 'x' or 'd' in normal and visual mode
-
+-- Non-telescope file operations
+vim.keymap.set('n', '<leader>fn', '<cmd>enew<cr>', { desc = 'New File' })
 vim.keymap.set('n', '<leader>sa', 'ggVG', { desc = 'Select all' })
-vim.keymap.set('n', '<leader>pa', 'ggVGp', { desc = 'Select all and paste' })
-vim.keymap.set('n', '<leader>du', '0Yo<Esc>P', { desc = 'Select line ad paste below' })
-
-vim.keymap.set({ 'n', 'v' }, 'x', [["_x]])
-vim.keymap.set({ 'n', 'v' }, 'd', [["_d]])
-vim.keymap.set('n', '<leader>P', 'o<Esc>O<Esc>p')
-
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected lines down' })
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selected lines up' })
--- Oil
-vim.keymap.set('n', '<leader>oi', ':Oil <CR>', { desc = 'Open Oil' })
-vim.keymap.set('n', '<leader>z', ':ZenMode <CR>', { desc = 'Toggle Zen' })
--- Misc
-vim.keymap.set('n', 't', ':TransparentToggle <CR>', { desc = 'Toggle Transparancy' })
-vim.keymap.set('n', '<leader>tt', ':SwitchColorscheme <CR>', { desc = 'Change Colorscheme' })
-
-vim.keymap.set('n', '<leader>to', function()
-  vim.opt.scrolloff = 999 - vim.o.scrolloff
-end, { desc = 'Toggle center cursor' })
-
-vim.keymap.set('n', '<leader>r', function()
-  vim.wo.relativenumber = not vim.wo.relativenumber
-end, { desc = 'Toggle relative number' })
-
--- Hide visual errors like eslint
-vim.keymap.set('n', '<leader>te', function()
-  local vt = vim.diagnostic.config().virtual_text
-  vim.diagnostic.config { virtual_text = not vt, underline = not vt }
-end, { desc = 'Toggle ESLint visuals' })
-
--- LSPSaga
-vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>', { silent = true })
-
--- vim: ts=2 sts=2 sw=2 et

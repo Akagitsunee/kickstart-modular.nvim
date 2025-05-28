@@ -1,7 +1,7 @@
 return {
   {
     'Mofiqul/vscode.nvim',
-    lazy = false, -- We want the colorscheme to load immediately
+    lazy = true, -- We want the colorscheme to load immediately
     priority = 1000, -- Load this before other plugins
     config = function()
       -- Enable transparent background

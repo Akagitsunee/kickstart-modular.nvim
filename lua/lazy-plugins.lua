@@ -15,78 +15,28 @@ local setlinecolor = function()
   vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#ffffff', bold = true })
 end
 
-require 'kickstart.plugins.diagnostic-config'
-
 require('lazy').setup({
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  -- Base plugins
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
-  -- NOTE: Plugins can also be added by using a table,
-  -- with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
-  --
-  -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
-  --
+  -- Core functionality by category
+  require 'kickstart.plugins.ui',         -- UI enhancements and themes
+  require 'kickstart.plugins.lsp',        -- LSP and debugging
+  require 'kickstart.plugins.completion', -- Completion and snippets
+  require 'kickstart.plugins.treesitter', -- Syntax highlighting and parsing
+  require 'kickstart.plugins.git',        -- Git integration
+  require 'kickstart.plugins.tools',      -- Utilities and tools
+  require 'kickstart.plugins.ai',         -- AI assistance
+  require 'kickstart.plugins.extras',     -- Additional utilities and learning tools
 
-  -- Load all themes
-  require('kickstart.plugins.theme-loader').get_plugin_specs(),
-  -- modular approach: using `require 'path/name'` will
-  -- include a plugin definition from file lua/path/name.lua
-  require 'kickstart/plugins/gitsigns',
-
-  require 'kickstart/plugins/which-key',
-
-  require 'kickstart/plugins/telescope',
-
-  require 'kickstart/plugins/lspconfig',
-
-  require 'kickstart/plugins/conform',
-
-  require 'kickstart/plugins/blink-cmp',
-
-  require 'kickstart/plugins/todo-comments',
-
-  require 'kickstart/plugins/mini',
-
-  require 'kickstart/plugins/treesitter',
-
-  require 'kickstart/plugins/copilot-chat',
-
-  require 'kickstart/plugins/vim-be-good',
-  require 'kickstart/plugins/lualine',
-  require 'kickstart/plugins/oil',
-  require 'kickstart/plugins/zen-mode',
-  require 'kickstart.plugins.switchscheme',
-  require 'kickstart.plugins.transparent',
-  require 'kickstart.plugins.notify',
-  require 'kickstart.plugins.noice',
-  require 'kickstart.plugins.lspsaga',
-  require 'kickstart.plugins.trouble',
-  -- require 'kickstart/plugins/bufferline',
-  -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
-  -- init.lua. If you want these files, they are in the repository, so you can just download them and
-  -- place them in the correct locations.
-
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
-  --
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-  --
-  -- require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
-  require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
-
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
+  -- NOTE: Custom plugins can be added in `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
+  --    You can put your custom plugins in that directory
   --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   -- { import = 'custom.plugins' },
 }, {
   ui = {
-    -- If you are using a Nerd Font: set icons to an empty table which will use the
-    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    -- If using a Nerd Font, we can use glyphs for our icons
     icons = vim.g.have_nerd_font and {} or {
       cmd = '⌘',
       config = '🛠',
@@ -109,6 +59,12 @@ require('lazy').setup({
   },
   install = {
     missing = true,
+  },
+  performance = {
+    rtp = {
+      disabled_plugins = {}, -- you can list unneeded stock plugins
+    },
+    stats = { enabled = true },
   },
 })
 

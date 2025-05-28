@@ -1,6 +1,7 @@
 return {
   'rose-pine/neovim',
   name = 'rose-pine',
+  lazy = true,
   config = function(opts)
     require('rose-pine').setup {
       dim_inactive_windows = true,

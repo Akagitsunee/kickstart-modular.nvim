@@ -1,6 +1,7 @@
 return {
   'Shatur/neovim-ayu',
   name = 'ayu',
+  lazy = true,
   config = function()
     require('ayu').setup {
       dark = true, -- Set to false for "light" variant

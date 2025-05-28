@@ -104,7 +104,8 @@ require 'lazy-bootstrap'
 -- [[ Configure and install plugins ]]
 require 'lazy-plugins'
 
-vim.cmd.colorscheme 'catppuccin'
+-- vim.cmd.colorscheme 'catppuccin'
+vim.cmd("colorscheme carbonfox")
 
 -- Show diagnostics in a floating window on CursorHold
 vim.o.updatetime = 800 -- shorter delay before CursorHold triggers
